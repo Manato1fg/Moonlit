@@ -121,23 +121,8 @@ public class Moonlit extends JFrame{
     }
 
     private class MoonlitPanel extends JPanel{
-        
-        private Graphics _g;
-
-        public Graphics _getGraphics(){
-            if(this._g == null) {
-                this._g = this.getGraphics();
-            }
-
-            return this._g;
-        }
 
         private ArrayList<MoonlitInterface> updateClasses = new ArrayList<MoonlitInterface>();
-
-
-        public MoonlitPanel() {
-            this._g = this.getGraphics();
-        }
 
         public void register(MoonlitInterface cls) {
             this.updateClasses.add(cls);
