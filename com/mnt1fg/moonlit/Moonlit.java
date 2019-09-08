@@ -40,13 +40,8 @@ import javax.swing.JPanel;
 public class Moonlit extends JFrame{
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
-    //一秒間に描画する回数
+    //how many times onUpdate() is called.
     private int ticks = 10;
-
-    //コンストラクタ
-    private Moonlit(){
-        
-    }
 
     public static Moonlit getInstance() {
 
@@ -58,13 +53,14 @@ public class Moonlit extends JFrame{
     }
 
     /**
-     * 更新してほしいクラスを登録
+     * register class to let its onUpdate() be called.
      * 
-     * @param cls : 更新してほしいクラス
+     * @param cls must implements MoonlitInterface
      */
     public void register(MoonlitInterface cls) {
         this.panel.register(cls);
     }
+
 
     public void createWindow(int width, int height) {
         this.setSize(width, height);
@@ -97,7 +93,7 @@ public class Moonlit extends JFrame{
     }
 
     /**
-     * 描画用関数
+     * draw functions
      */
 
     public void setColor(Graphics _g, int r, int g, int b) {
@@ -117,7 +113,7 @@ public class Moonlit extends JFrame{
     }
 
     /**
-     * Utilities
+     * utilities
      */
 
     public static void log(String str){

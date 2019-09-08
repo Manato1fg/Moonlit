@@ -32,7 +32,7 @@ import java.awt.Graphics;
 public interface MoonlitInterface {
 
     /**
-     * 更新された時に呼び出されるメソッド
+     * method which is called per ticks
      */
     public abstract void onUpdate(Graphics g);
 }
