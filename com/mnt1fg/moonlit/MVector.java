@@ -46,21 +46,14 @@ public class MVector {
     }
 
     public MVector multiply(double a) {
-        this.x *= a;
-        this.y *= a;
-        this.z *= a;
-        return this;
+        return new MVector(this.x * a, this.y * a, this.z * a);
     }
 
     public MVector add(MVector v) {
-        this.x += v.x;
-        this.y += v.y;
-        this.z += v.z;
-        return this;
+        return new MVector(this.x + v.x, this.y + v.y, this.z + v.z);
     }
 
     public MVector subtract(MVector v) {
-        this.add(v.multiply(-1.0));
-        return this;
+        return this.add(v.multiply(-1.0));
     }
 }
