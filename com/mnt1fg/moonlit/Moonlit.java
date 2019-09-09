@@ -34,17 +34,18 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Moonlit extends JFrame{
+public class Moonlit extends JFrame {
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
-    //how many times onUpdate() is called.
+    // how many times onUpdate() is called.
     private int ticks = 10;
-    //background color
+    // background color
     private Color backgroundColor = Color.white;
     private int width, height;
     private boolean setupOk = false;
@@ -71,7 +72,6 @@ public class Moonlit extends JFrame{
         this.panel.register(cls);
     }
 
-
     public void createWindow(int width, int height) {
         this.setSize(width, height);
         this.width = width;
@@ -82,17 +82,17 @@ public class Moonlit extends JFrame{
         setupOk = true;
     }
 
-    public void showWindow(){
-        if( ! setupOk ) {
+    public void showWindow() {
+        if (!setupOk) {
             Moonlit.log("you must call createWindow method first.");
             System.exit(0);
         }
         this.setVisible(true);
         final int _ticks = this.ticks;
         final MoonlitPanel _panel = this.panel;
-        new Thread(new Runnable(){
+        new Thread(new Runnable() {
             @Override
-            public void run(){
+            public void run() {
                 while (true) {
                     try {
                         _panel.repaint();
@@ -106,8 +106,8 @@ public class Moonlit extends JFrame{
         }).start();
     }
 
-    public void setTicks(int ticks){
-        if(ticks <= 0){
+    public void setTicks(int ticks) {
+        if (ticks <= 0) {
             Moonlit.log("ticks must be bigger than 0");
             System.exit(0);
         }
@@ -144,7 +144,7 @@ public class Moonlit extends JFrame{
         g.drawArc(x - radius, y - radius, radius * 2, radius * 2, 0, 360);
     }
 
-    public void fillRect(Graphics g, int x, int y, int width, int height){
+    public void fillRect(Graphics g, int x, int y, int width, int height) {
         g.fillRect(x, y, width, height);
     }
 
@@ -188,12 +188,12 @@ public class Moonlit extends JFrame{
      * utilities
      */
 
-    public static void log(Object obj){
-        System.out.println("[Moonlit] "+obj.toString());
+    public static void log(Object obj) {
+        System.out.println("[Moonlit] " + obj.toString());
     }
 
     public static double map(double x, double originalMin, double originalMax, double destMin, double destMax) {
-        if( originalMax <= originalMin || destMax <= destMin) {
+        if (originalMax <= originalMin || destMax <= destMin) {
             Moonlit.log("min must be smaller than max");
             return x;
         }
@@ -206,7 +206,7 @@ public class Moonlit extends JFrame{
         return y + destMin;
     }
 
-    private class MoonlitPanel extends JPanel{
+    private class MoonlitPanel extends JPanel {
 
         private ArrayList<MoonlitInterface> updateClasses = new ArrayList<MoonlitInterface>();
 
@@ -219,7 +219,7 @@ public class Moonlit extends JFrame{
             super.paintComponent(g);
             g.setColor(Moonlit.getInstance().getBackgroundColor());
             g.fillRect(0, 0, Moonlit.getInstance().getWidth(), Moonlit.getInstance().getHeight());
-            if(Moonlit.getInstance().getAntiAliasing()) {
+            if (Moonlit.getInstance().getAntiAliasing()) {
                 Graphics2D g2 = (Graphics2D) g;
                 // 図形や線のアンチエイリアシングの有効化
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
