@@ -166,7 +166,7 @@ public class Moonlit extends JFrame{
         double ratio = x / originalMax;
         destMax -= destMin;
         double y = destMax * ratio;
-        return (int) (y + destMin);
+        return y + destMin;
     }
 
     private class MoonlitPanel extends JPanel{
