@@ -124,7 +124,7 @@ public class Moonlit extends JFrame{
     }
 
     public void drawCircle(Graphics g, int x, int y, int radius) {
-        g.drawArc(x - radius, y - radius, radius, radius, 0, 360);
+        g.drawArc(x - radius, y - radius, radius * 2, radius * 2, 0, 360);
     }
 
     public void fillRect(Graphics g, int x, int y, int width, int height){
@@ -136,7 +136,7 @@ public class Moonlit extends JFrame{
     }
 
     public void fillCircle(Graphics g, int x, int y, int radius) {
-        g.fillArc(x - radius, y - radius, radius, radius, 0, 360);
+        g.fillArc(x - radius, y - radius, radius * 2, radius * 2, 0, 360);
     }
 
     public void setBackgroundColor(Color backgroundColor) {
