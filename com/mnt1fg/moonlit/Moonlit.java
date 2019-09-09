@@ -42,6 +42,10 @@ public class Moonlit extends JFrame{
     private MoonlitPanel panel = null;
     //how many times onUpdate() is called.
     private int ticks = 10;
+    //background color
+    private Color backgroundColor = Color.white;
+    private int width, height;
+    private boolean setupOk = false;
 
     public static Moonlit getInstance() {
 
@@ -64,12 +68,19 @@ public class Moonlit extends JFrame{
 
     public void createWindow(int width, int height) {
         this.setSize(width, height);
+        this.width = width;
+        this.height = height;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.panel = new MoonlitPanel();
         this.add(this.panel);
+        setupOk = true;
     }
 
-    public void showWindow() {
+    public void showWindow(){
+        if( ! setupOk ) {
+            Moonlit.log("you must call createWindow method first.");
+            System.exit(0);
+        }
         this.setVisible(true);
         final int _ticks = this.ticks;
         final MoonlitPanel _panel = this.panel;
@@ -112,6 +123,22 @@ public class Moonlit extends JFrame{
         g.fillRect(x, y, width, height);
     }
 
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
+
+    public Color getBackgroundColor() {
+        return this.backgroundColor;
+    }
+
     /**
      * utilities
      */
@@ -131,6 +158,8 @@ public class Moonlit extends JFrame{
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+            g.setColor(Moonlit.getInstance().getBackgroundColor());
+            g.fillRect(0, 0, Moonlit.getInstance().getWidth(), Moonlit.getInstance().getHeight());
             this.updateClasses.forEach(c -> c.onUpdate(g));
         }
 
