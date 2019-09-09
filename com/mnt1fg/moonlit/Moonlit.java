@@ -49,6 +49,7 @@ public class Moonlit extends JFrame {
     private Color backgroundColor = Color.white;
     private int width, height;
     private boolean setupOk = false;
+    public boolean isFirst = true;
 
     public double elapsedTime = 0.0;
 
@@ -90,20 +91,6 @@ public class Moonlit extends JFrame {
         this.setVisible(true);
         final int _ticks = this.ticks;
         final MoonlitPanel _panel = this.panel;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        _panel.repaint();
-                        Thread.sleep((int) (1000 / _ticks));
-                        Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
     }
 
     public void setTicks(int ticks) {
@@ -231,6 +218,24 @@ public class Moonlit extends JFrame {
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             }
             this.updateClasses.forEach(c -> c.onUpdate(g));
+
+            if (Moonlit.getInstance().isFirst) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true) {
+                            try {
+                                _panel.repaint();
+                                Thread.sleep((int) (1000 / _ticks));
+                                Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+                Moonlit.getInstance().isFirst = false;
+            }
         }
 
     }
