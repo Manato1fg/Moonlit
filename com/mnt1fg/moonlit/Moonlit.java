@@ -119,6 +119,14 @@ public class Moonlit extends JFrame{
         g.drawLine(x1, y1, x2, y2);
     }
 
+    public void drawArc(Graphics g, int x, int y, int width, int height, int startAngle, int arcAngle) {
+        g.drawArc(x, y, width, height, startAngle, arcAngle);
+    }
+
+    public void drawCircle(Graphics g, int x, int y, int radius) {
+        g.drawArc(x - radius, y - radius, radius, radius, 0, 360);
+    }
+
     public void fillRect(Graphics g, int x, int y, int width, int height){
         g.fillRect(x, y, width, height);
     }
