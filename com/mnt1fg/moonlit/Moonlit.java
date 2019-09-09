@@ -95,7 +95,7 @@ public class Moonlit extends JFrame{
                     try {
                         _panel.repaint();
                         Thread.sleep((int) (1000 / _ticks));
-                        Moonlit.getInstance().elapsedTime += 1 / _ticks;
+                        Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -105,6 +105,10 @@ public class Moonlit extends JFrame{
     }
 
     public void setTicks(int ticks){
+        if(ticks <= 0){
+            Moonlit.log("ticks must be bigger than 0");
+            System.exit(0);
+        }
         this.ticks = ticks;
     }
 
