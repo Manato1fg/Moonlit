@@ -122,6 +122,10 @@ public class Moonlit extends JFrame {
         _g.setColor(new Color(r, g, b));
     }
 
+    public void setColor(Graphics _g, Color color) {
+        _g.setColor(color);
+    }
+
     public void setStroke(Graphics g, int strokeSize) {
         Graphics2D g2d = (Graphics2D) g;
         BasicStroke bs = new BasicStroke(strokeSize);
