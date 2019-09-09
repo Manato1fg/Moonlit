@@ -30,8 +30,10 @@
 
 package com.mnt1fg.moonlit;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -109,6 +111,12 @@ public class Moonlit extends JFrame{
 
     public void setColor(Graphics _g, int r, int g, int b) {
         _g.setColor(new Color(r, g, b));
+    }
+
+    public void setStroke(Graphics g, int strokeSize) {
+        Graphics2D g2d = (Graphics2D) g;
+        BasicStroke bs = new BasicStroke(strokeSize);
+        g2d.setStroke(bs);
     }
 
     public void drawRect(Graphics g, int x, int y, int width, int height) {
