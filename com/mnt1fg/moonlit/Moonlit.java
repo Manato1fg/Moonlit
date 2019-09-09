@@ -154,6 +154,10 @@ public class Moonlit extends JFrame{
         g.fillArc(x - radius, y - radius, radius * 2, radius * 2, 0, 360);
     }
 
+    public void drawString(Graphics g, int x, int y, String str) {
+        g.drawString(str, x, y);
+    }
+
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
