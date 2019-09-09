@@ -56,4 +56,8 @@ public class MVector {
     public MVector subtract(MVector v) {
         return this.add(v.multiply(-1.0));
     }
+
+    public double abs(){
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
 }
