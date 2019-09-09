@@ -46,6 +46,10 @@ public class MoonlitTest implements MoonlitInterface{
         moonlit.setTicks(20);
         moonlit.register(this);
         moonlit.showWindow();
+
+        //2019/09/09
+        //Moonlit.log(Moonlit.map(100.0, 200.0, 400.0, 0.0, 20.0));
+
     }
 
     private int t = 0;

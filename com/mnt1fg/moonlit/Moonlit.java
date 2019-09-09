@@ -151,8 +151,22 @@ public class Moonlit extends JFrame{
      * utilities
      */
 
-    public static void log(String str){
-        System.out.println("[Moonlit] "+str);
+    public static void log(Object obj){
+        System.out.println("[Moonlit] "+obj.toString());
+    }
+
+    public static double map(double x, double originalMin, double originalMax, double destMin, double destMax) {
+        if( originalMax <= originalMin || destMax <= destMin) {
+            Moonlit.log("min must be smaller than max");
+            return x;
+        }
+
+        x -= originalMin;
+        originalMax -= originalMin;
+        double ratio = x / originalMax;
+        destMax -= destMin;
+        double y = destMax * ratio;
+        return (int) (y + destMin);
     }
 
     private class MoonlitPanel extends JPanel{
