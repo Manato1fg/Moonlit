@@ -44,7 +44,7 @@ public class Moonlit extends JFrame {
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
     // how many times onUpdate() is called.
-    private int ticks = 10;
+    public int ticks = 10;
     // background color
     private Color backgroundColor = Color.white;
     private int width, height;
@@ -89,8 +89,6 @@ public class Moonlit extends JFrame {
             System.exit(0);
         }
         this.setVisible(true);
-        final int _ticks = this.ticks;
-        final MoonlitPanel _panel = this.panel;
     }
 
     public void setTicks(int ticks) {
@@ -218,7 +216,8 @@ public class Moonlit extends JFrame {
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             }
             this.updateClasses.forEach(c -> c.onUpdate(g));
-
+            final int _ticks = Moonlit.getInstance().ticks;
+            final MoonlitPanel _panel = this;
             if (Moonlit.getInstance().isFirst) {
                 new Thread(new Runnable() {
                     @Override

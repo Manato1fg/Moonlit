@@ -34,7 +34,9 @@ public class MVector {
     public double x, y, z;
 
     public MVector(double x, double y) {
-        MVector(x, y, 0,0);
+        this.x = x;
+        this.y = y;
+        this.z = 0.0;
     }
 
     public MVector(double x, double y, double z) {
@@ -59,5 +61,6 @@ public class MVector {
 
     public MVector subtract(MVector v) {
         this.add(v.multiply(-1.0));
+        return this;
     }
 }
