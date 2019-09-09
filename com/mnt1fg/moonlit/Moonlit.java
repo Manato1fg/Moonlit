@@ -111,7 +111,7 @@ public class Moonlit extends JFrame{
         _g.setColor(new Color(r, g, b));
     }
 
-    public void drawRectangle(Graphics g, int x, int y, int width, int height) {
+    public void drawRect(Graphics g, int x, int y, int width, int height) {
         g.drawRect(x, y, width, height);
     }
 
@@ -121,6 +121,14 @@ public class Moonlit extends JFrame{
 
     public void fillRect(Graphics g, int x, int y, int width, int height){
         g.fillRect(x, y, width, height);
+    }
+
+    public void fillArc(Graphics g, int x, int y, int width, int height, int startAngle, int arcAngle) {
+        g.fillArc(x, y, width, height, startAngle, arcAngle);
+    }
+
+    public void fillCircle(Graphics g, int x, int y, int radius) {
+        g.fillArc(x, y, radius, radius, 0, 360);
     }
 
     public void setBackgroundColor(Color backgroundColor) {
