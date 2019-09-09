@@ -49,6 +49,8 @@ public class Moonlit extends JFrame{
     private int width, height;
     private boolean setupOk = false;
 
+    public double elapsedTime = 0.0;
+
     public static Moonlit getInstance() {
 
         if (instance == null) {
@@ -93,6 +95,7 @@ public class Moonlit extends JFrame{
                     try {
                         _panel.repaint();
                         Thread.sleep((int) (1000 / _ticks));
+                        Moonlit.getInstance().elapsedTime += 1 / _ticks;
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
