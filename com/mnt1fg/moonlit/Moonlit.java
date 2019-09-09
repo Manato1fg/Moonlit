@@ -51,6 +51,8 @@ public class Moonlit extends JFrame{
 
     public double elapsedTime = 0.0;
 
+    private boolean antiAliasing = true;
+
     public static Moonlit getInstance() {
 
         if (instance == null) {
@@ -162,6 +164,14 @@ public class Moonlit extends JFrame{
         this.backgroundColor = backgroundColor;
     }
 
+    public void setAntiAliasing(boolean flag) {
+        this.antiAliasing = flag;
+    }
+
+    public boolean getAntiAliasing() {
+        return this.antiAliasing;
+    }
+
     public int getWidth() {
         return this.width;
     }
@@ -209,6 +219,13 @@ public class Moonlit extends JFrame{
             super.paintComponent(g);
             g.setColor(Moonlit.getInstance().getBackgroundColor());
             g.fillRect(0, 0, Moonlit.getInstance().getWidth(), Moonlit.getInstance().getHeight());
+            if(Moonlit.getInstance().getAntiAliasing()) {
+                Graphics2D g2 = (Graphics2D) g;
+                // 図形や線のアンチエイリアシングの有効化
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                // 文字描画のアンチエイリアシングの有効化
+                g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            }
             this.updateClasses.forEach(c -> c.onUpdate(g));
         }
 
