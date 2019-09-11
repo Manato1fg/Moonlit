@@ -235,7 +235,7 @@ public class Moonlit extends JFrame {
                         while (true) {
                             try {
                                 _panel.repaint();
-                                TimeUnit.MICROSECONDS.sleep(1000 / _ticks / Moonlit.getInstance().getPlaySpeed());
+                                TimeUnit.NANOSECONDS.sleep(100000000 / _ticks / Moonlit.getInstance().getPlaySpeed());
                                 Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
