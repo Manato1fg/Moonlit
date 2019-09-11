@@ -52,6 +52,7 @@ public class Moonlit extends JFrame {
     public boolean isFirst = true;
 
     public double elapsedTime = 0.0;
+    private int playSpeed = 1;
 
     private boolean antiAliasing = true;
 
@@ -97,6 +98,14 @@ public class Moonlit extends JFrame {
             System.exit(0);
         }
         this.ticks = ticks;
+    }
+
+    public void setPlaySpeed(int n) {
+        this.playSpeed = n;
+    }
+
+    public int getPlaySpeed() {
+        return this.playSpeed;
     }
 
     /**
@@ -225,7 +234,7 @@ public class Moonlit extends JFrame {
                         while (true) {
                             try {
                                 _panel.repaint();
-                                Thread.sleep((int) (1000 / _ticks));
+                                Thread.sleep((int) (1000 / _ticks / Moonlit.getInstance().getPlaySpeed()));
                                 Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
