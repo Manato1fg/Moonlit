@@ -29,33 +29,52 @@
 package com.mnt1fg.moonlit;
 
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 
 import com.mnt1fg.moonlit.Moonlit;
 import com.mnt1fg.moonlit.MoonlitInterface;
 
-
-public class MoonlitTest implements MoonlitInterface{
+public class MoonlitTest implements MoonlitInterface {
 
     public static void main(String[] args) {
         new MoonlitTest();
     }
 
-    public MoonlitTest(){
+    public MoonlitTest() {
         Moonlit moonlit = Moonlit.getInstance();
         moonlit.createWindow(600, 400);
         moonlit.setTicks(20);
         moonlit.register(this);
         moonlit.showWindow();
 
-        //2019/09/09
-        //Moonlit.log(Moonlit.map(100.0, 200.0, 400.0, 0.0, 20.0));
+        // 2019/09/09
+        // Moonlit.log(Moonlit.map(100.0, 200.0, 400.0, 0.0, 20.0));
 
     }
 
     private int t = 0;
+
     @Override
     public void onUpdate(Graphics g) {
         Moonlit moonlit = Moonlit.getInstance();
         t++;
+    }
+
+    @Override
+    public void onKeyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onKeyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onKeyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+
     }
 }

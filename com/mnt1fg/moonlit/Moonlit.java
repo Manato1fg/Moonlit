@@ -38,14 +38,17 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Moonlit extends JFrame {
+public class Moonlit extends JFrame implements KeyListener{
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
     // how many times onUpdate() is called.
-    public int ticks = 10;
+    public double ticks = 10;
     // background color
     private Color backgroundColor = Color.white;
     private int width, height;
@@ -98,7 +101,7 @@ public class Moonlit extends JFrame {
         this.setVisible(true);
     }
 
-    public void setTicks(int ticks) {
+    public void setTicks(double ticks) {
         if (ticks <= 0) {
             Moonlit.log("ticks must be bigger than 0");
             System.exit(0);
@@ -215,6 +218,8 @@ public class Moonlit extends JFrame {
         return y + destMin;
     }
 
+    
+
     private class MoonlitPanel extends JPanel {
 
         private ArrayList<MoonlitInterface> updateClasses = new ArrayList<MoonlitInterface>();
@@ -236,7 +241,7 @@ public class Moonlit extends JFrame {
                 g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             }
             this.updateClasses.forEach(c -> c.onUpdate(g));
-            final int _ticks = Moonlit.getInstance().ticks;
+            final double _ticks = Moonlit.getInstance().ticks;
             final MoonlitPanel _panel = this;
             if (Moonlit.getInstance().isFirst) {
                 new Thread(new Runnable() {
@@ -245,7 +250,7 @@ public class Moonlit extends JFrame {
                         while (true) {
                             try {
                                 _panel.repaint();
-                                TimeUnit.NANOSECONDS.sleep(100000000 / _ticks / Moonlit.getInstance().getPlaySpeed());
+                                TimeUnit.NANOSECONDS.sleep((long) (100000000 / _ticks / Moonlit.getInstance().getPlaySpeed()));
                                 Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -257,5 +262,22 @@ public class Moonlit extends JFrame {
             }
         }
 
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        this.panel.updateClasses.forEach(c -> c.onKeyTyped(e));
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        this.panel.updateClasses.forEach(c -> c.onKeyPressed(e));
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        this.panel.updateClasses.forEach(c -> c.onKeyReleased(e));
     }
 }

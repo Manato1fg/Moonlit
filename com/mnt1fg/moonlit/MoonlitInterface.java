@@ -29,10 +29,18 @@ package com.mnt1fg.moonlit;
 
 import java.awt.Graphics;
 
+import java.awt.event.KeyEvent;
+
 public interface MoonlitInterface {
 
     /**
      * method which is called per ticks
      */
     public abstract void onUpdate(Graphics g);
+
+    public abstract void onKeyPressed(KeyEvent e);
+    
+    public abstract void onKeyReleased(KeyEvent e);
+    
+    public abstract void onKeyTyped(KeyEvent e);
 }
