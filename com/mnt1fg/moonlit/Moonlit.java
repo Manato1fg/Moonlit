@@ -94,6 +94,7 @@ public class Moonlit extends JFrame implements KeyListener{
     }
 
     public void showWindow() {
+        addKeyListener(this);
         if (!setupOk) {
             Moonlit.log("you must call createWindow method first.");
             System.exit(0);
