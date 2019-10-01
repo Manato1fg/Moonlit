@@ -44,7 +44,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Moonlit extends JFrame implements KeyListener{
+public class Moonlit extends JFrame implements KeyListener {
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
     // how many times onUpdate() is called.
@@ -54,6 +54,7 @@ public class Moonlit extends JFrame implements KeyListener{
     private int width, height;
     private boolean setupOk = false;
     public boolean isFirst = true;
+    public boolean noLoop = false;
     private int offsetWidth = 0, offsetHeight = 0;
 
     public double elapsedTime = 0.0;
@@ -236,8 +237,6 @@ public class Moonlit extends JFrame implements KeyListener{
         return new ComplexNumber(re, im);
     }
 
-    
-
     private class MoonlitPanel extends JPanel {
 
         private ArrayList<MoonlitInterface> updateClasses = new ArrayList<MoonlitInterface>();
@@ -261,14 +260,15 @@ public class Moonlit extends JFrame implements KeyListener{
             this.updateClasses.forEach(c -> c.onUpdate(g));
             final double _ticks = Moonlit.getInstance().ticks;
             final MoonlitPanel _panel = this;
-            if (Moonlit.getInstance().isFirst) {
+            if (Moonlit.getInstance().isFirst && Moonlit.getInstance().noLoop) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         while (true) {
                             try {
                                 _panel.repaint();
-                                TimeUnit.NANOSECONDS.sleep((long) (100000000 / _ticks / Moonlit.getInstance().getPlaySpeed()));
+                                TimeUnit.NANOSECONDS
+                                        .sleep((long) (100000000 / _ticks / Moonlit.getInstance().getPlaySpeed()));
                                 Moonlit.getInstance().elapsedTime += 1.0 / (double) _ticks;
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -279,14 +279,18 @@ public class Moonlit extends JFrame implements KeyListener{
                 Moonlit.getInstance().isFirst = false;
             }
         }
+    }
 
+    public void repaint() {
+        this.panel.repaint();
     }
 
     ArrayList<Function<KeyEvent, Void>> keyTypedArray = new ArrayList<>();
-    
+
     public void onKeyTyped(Function<KeyEvent, Void> f) {
         keyTypedArray.add(f);
     }
+
     @Override
     public void keyTyped(KeyEvent e) {
         keyTypedArray.forEach(a -> a.apply(e));
@@ -302,7 +306,6 @@ public class Moonlit extends JFrame implements KeyListener{
     public void keyPressed(KeyEvent e) {
         keyPressedArray.forEach(a -> a.apply(e));
     }
-
 
     ArrayList<Function<KeyEvent, Void>> keyReleasedArray = new ArrayList<>();
 
