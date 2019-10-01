@@ -219,6 +219,23 @@ public class Moonlit extends JFrame implements KeyListener{
         return y + destMin;
     }
 
+    public static double[] createRandomArray(int length, double min, double max) {
+        double[] ary = new double[length];
+        double range = max - min;
+        for (int i = 0; i < length; i++) {
+            ary[i] = Math.random() * range + min;
+        }
+        return ary;
+    }
+
+    /**
+     * for compiling
+     */
+
+    public static ComplexNumber cn(double re, double im) {
+        return new ComplexNumber(re, im);
+    }
+
     
 
     private class MoonlitPanel extends JPanel {
