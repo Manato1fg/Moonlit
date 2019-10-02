@@ -37,11 +37,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
+import java.util.function.Consumer;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -285,113 +284,113 @@ public class Moonlit extends JFrame implements KeyListener, MouseInputListener {
 
     }
 
-    ArrayList<Function<KeyEvent, Void>> keyTypedArray = new ArrayList<>();
+    ArrayList<Consumer<KeyEvent>> keyTypedArray = new ArrayList<>();
 
-    public void onKeyTyped(Function<KeyEvent, Void> f) {
+    public void onKeyTyped(Consumer<KeyEvent> f) {
         keyTypedArray.add(f);
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        keyTypedArray.forEach(a -> a.apply(e));
+        keyTypedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<KeyEvent, Void>> keyPressedArray = new ArrayList<>();
+    ArrayList<Consumer<KeyEvent>> keyPressedArray = new ArrayList<>();
 
-    public void onKeyPressed(Function<KeyEvent, Void> f) {
+    public void onKeyPressed(Consumer<KeyEvent> f) {
         keyPressedArray.add(f);
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keyPressedArray.forEach(a -> a.apply(e));
+        keyPressedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<KeyEvent, Void>> keyReleasedArray = new ArrayList<>();
+    ArrayList<Consumer<KeyEvent>> keyReleasedArray = new ArrayList<>();
 
-    public void onKeyReleased(Function<KeyEvent, Void> f) {
+    public void onKeyReleased(Consumer<KeyEvent> f) {
         keyReleasedArray.add(f);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keyReleasedArray.forEach(a -> a.apply(e));
+        keyReleasedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseDraggedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseDraggedArray = new ArrayList<>();
 
-    public void onMouseDragged(Function<MouseEvent, Void> f) {
+    public void onMouseDragged(Consumer<MouseEvent> f) {
         mouseDraggedArray.add(f);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        mouseDraggedArray.forEach(a -> a.apply(e));
+        mouseDraggedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseMovedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseMovedArray = new ArrayList<>();
 
-    public void onMouseMoved(Function<MouseEvent, Void> f) {
+    public void onMouseMoved(Consumer<MouseEvent> f) {
         mouseMovedArray.add(f);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouseMovedArray.forEach(a -> a.apply(e));
+        mouseMovedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseClickedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseClickedArray = new ArrayList<>();
 
-    public void onMouseClicked(Function<MouseEvent, Void> f) {
+    public void onMouseClicked(Consumer<MouseEvent> f) {
         mouseClickedArray.add(f);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        mouseClickedArray.forEach(a -> a.apply(e));
+        mouseClickedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mousePressedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mousePressedArray = new ArrayList<>();
 
-    public void onMousePressed(Function<MouseEvent, Void> f) {
+    public void onMousePressed(Consumer<MouseEvent> f) {
         mousePressedArray.add(f);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        mousePressedArray.forEach(a -> a.apply(e));
+        mousePressedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseReleasedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseReleasedArray = new ArrayList<>();
 
-    public void onMouseReleased(Function<MouseEvent, Void> f) {
+    public void onMouseReleased(Consumer<MouseEvent> f) {
         mouseReleasedArray.add(f);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseReleasedArray.forEach(a -> a.apply(e));
+        mouseReleasedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseEnteredArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseEnteredArray = new ArrayList<>();
 
-    public void onMouseEntered(Function<MouseEvent, Void> f) {
+    public void onMouseEntered(Consumer<MouseEvent> f) {
         mouseEnteredArray.add(f);
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        mouseEnteredArray.forEach(a -> a.apply(e));
+        mouseEnteredArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Function<MouseEvent, Void>> mouseExitedArray = new ArrayList<>();
+    ArrayList<Consumer<MouseEvent>> mouseExitedArray = new ArrayList<>();
 
-    public void onMouseExited(Function<MouseEvent, Void> f) {
+    public void onMouseExited(Consumer<MouseEvent> f) {
         mouseExitedArray.add(f);
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        mouseExitedArray.forEach(a -> a.apply(e));
+        mouseExitedArray.forEach(a -> a.accept(e));
     }
 }
