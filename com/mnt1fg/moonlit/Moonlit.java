@@ -60,6 +60,7 @@ public class Moonlit extends JFrame implements KeyListener {
     private int width, height;
     private boolean setupOk = false;
     public boolean isFirst = true;
+    public boolean noLoop = false;
     private int offsetWidth = 0, offsetHeight = 0;
 
     public double elapsedTime = 0.0;
@@ -279,7 +280,7 @@ public class Moonlit extends JFrame implements KeyListener {
             this.updateClasses.forEach(c -> c.onUpdate(g));
             final double _ticks = Moonlit.getInstance().ticks;
             final MoonlitPanel _panel = this;
-            if (Moonlit.getInstance().isFirst) {
+            if (Moonlit.getInstance().isFirst && !noLoop) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
