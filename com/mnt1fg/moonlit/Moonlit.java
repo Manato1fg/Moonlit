@@ -234,6 +234,10 @@ public class Moonlit extends JFrame implements KeyListener {
         return ary;
     }
 
+    public void repaint() {
+        this.panel.repaint();
+    }
+
     /**
      * for compiling
      */
@@ -252,6 +256,7 @@ public class Moonlit extends JFrame implements KeyListener {
 
         public MoonlitPanel() {
             addMouseListener(this);
+            addMouseMotionListener(this);
         }
 
         public void register(MoonlitInterface cls) {
