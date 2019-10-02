@@ -46,7 +46,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-public class Moonlit extends JFrame implements KeyListener, MouseInputListener {
+public class Moonlit extends JFrame implements KeyListener {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private static Moonlit instance = null;
     private MoonlitPanel panel = null;
     // how many times onUpdate() is called.
@@ -238,9 +242,17 @@ public class Moonlit extends JFrame implements KeyListener, MouseInputListener {
         return new ComplexNumber(re, im);
     }
 
-    private class MoonlitPanel extends JPanel {
+    private class MoonlitPanel extends JPanel implements MouseInputListener {
 
+        /**
+         *
+         */
+        private static final long serialVersionUID = 1L;
         private ArrayList<MoonlitInterface> updateClasses = new ArrayList<MoonlitInterface>();
+
+        public MoonlitPanel() {
+            addMouseListener(this);
+        }
 
         public void register(MoonlitInterface cls) {
             this.updateClasses.add(cls);
@@ -282,6 +294,55 @@ public class Moonlit extends JFrame implements KeyListener, MouseInputListener {
             }
         }
 
+        ArrayList<Consumer<MouseEvent>> mouseDraggedArray = new ArrayList<>();
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            mouseDraggedArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mouseMovedArray = new ArrayList<>();
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            mouseMovedArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mouseClickedArray = new ArrayList<>();
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            mouseClickedArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mousePressedArray = new ArrayList<>();
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            mousePressedArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mouseReleasedArray = new ArrayList<>();
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            mouseReleasedArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mouseEnteredArray = new ArrayList<>();
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            mouseEnteredArray.forEach(a -> a.accept(e));
+        }
+
+        ArrayList<Consumer<MouseEvent>> mouseExitedArray = new ArrayList<>();
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            mouseExitedArray.forEach(a -> a.accept(e));
+        }
+
     }
 
     ArrayList<Consumer<KeyEvent>> keyTypedArray = new ArrayList<>();
@@ -317,80 +378,31 @@ public class Moonlit extends JFrame implements KeyListener, MouseInputListener {
         keyReleasedArray.forEach(a -> a.accept(e));
     }
 
-    ArrayList<Consumer<MouseEvent>> mouseDraggedArray = new ArrayList<>();
-
     public void onMouseDragged(Consumer<MouseEvent> f) {
-        mouseDraggedArray.add(f);
+        this.panel.mouseDraggedArray.add(f);
     }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        mouseDraggedArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mouseMovedArray = new ArrayList<>();
 
     public void onMouseMoved(Consumer<MouseEvent> f) {
-        mouseMovedArray.add(f);
+        this.panel.mouseMovedArray.add(f);
     }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        mouseMovedArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mouseClickedArray = new ArrayList<>();
 
     public void onMouseClicked(Consumer<MouseEvent> f) {
-        mouseClickedArray.add(f);
+        this.panel.mouseClickedArray.add(f);
     }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        mouseClickedArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mousePressedArray = new ArrayList<>();
 
     public void onMousePressed(Consumer<MouseEvent> f) {
-        mousePressedArray.add(f);
+        this.panel.mousePressedArray.add(f);
     }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        mousePressedArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mouseReleasedArray = new ArrayList<>();
 
     public void onMouseReleased(Consumer<MouseEvent> f) {
-        mouseReleasedArray.add(f);
+        this.panel.mouseReleasedArray.add(f);
     }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        mouseReleasedArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mouseEnteredArray = new ArrayList<>();
 
     public void onMouseEntered(Consumer<MouseEvent> f) {
-        mouseEnteredArray.add(f);
+        this.panel.mouseEnteredArray.add(f);
     }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        mouseEnteredArray.forEach(a -> a.accept(e));
-    }
-
-    ArrayList<Consumer<MouseEvent>> mouseExitedArray = new ArrayList<>();
 
     public void onMouseExited(Consumer<MouseEvent> f) {
-        mouseExitedArray.add(f);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        mouseExitedArray.forEach(a -> a.accept(e));
+        this.panel.mouseExitedArray.add(f);
     }
 }
