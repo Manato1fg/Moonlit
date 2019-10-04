@@ -41,6 +41,7 @@ import java.util.function.Consumer;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -62,6 +63,9 @@ public class Moonlit extends JFrame implements KeyListener {
     public boolean isFirst = true;
     public boolean noLoop = false;
     private int offsetWidth = 0, offsetHeight = 0;
+
+    BufferedImage _img;
+    Graphics2D _g2d;
 
     public double elapsedTime = 0.0;
     private int playSpeed = 1;
@@ -93,6 +97,8 @@ public class Moonlit extends JFrame implements KeyListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.panel = new MoonlitPanel();
         this.add(this.panel);
+        _img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        _g2d = (Graphics2D) _img.getGraphics();
         setupOk = true;
     }
 
@@ -175,8 +181,47 @@ public class Moonlit extends JFrame implements KeyListener {
         g.drawString(str, x + this.offsetWidth, y + this.offsetHeight);
     }
 
+    /**
+     * for double value
+     */
+    public void drawRect(Graphics g, double x, double y, double width, double height) {
+        this.drawRect(g, (int) x, (int) y, (int) width, (int) height);
+    }
+
+    public void drawLine(Graphics g, double x1, double y1, double x2, double y2) {
+        this.drawLine(g, (int) x1, (int) y1, (int) x2, (int) y2);
+    }
+
+    public void drawArc(Graphics g, double x, double y, double width, double height, double startAngle,
+            double arcAngle) {
+        this.drawArc(g, (int) x, (int) y, (int) width, (int) height, (int) startAngle, (int) arcAngle);
+    }
+
+    public void drawCircle(Graphics g, double x, double y, double radius) {
+        this.drawCircle(g, (int) x, (int) y, (int) radius);
+    }
+
+    public void fillRect(Graphics g, double x, double y, double width, double height) {
+        this.fillRect(g, (int) x, (int) y, (int) width, (int) height);
+    }
+
+    public void fillArc(Graphics g, double x, double y, double width, double height, double startAngle,
+            double arcAngle) {
+        this.fillArc(g, (int) x, (int) y, (int) width, (int) height, (int) startAngle, (int) arcAngle);
+    }
+
+    public void fillCircle(Graphics g, double x, double y, double radius) {
+        this.fillCircle(g, (int) x, (int) y, (int) radius);
+    }
+
+    public void drawString(Graphics g, double x, double y, String str) {
+        this.drawString(g, (int) x, (int) y, str);
+    }
+
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+        _g2d.setColor(backgroundColor);
+        _g2d.fillRect(0, 0, this.width, this.height);
     }
 
     public void translate(int offsetWidth, int offsetHeight) {
@@ -271,13 +316,13 @@ public class Moonlit extends JFrame implements KeyListener {
             // g.fillRect(0, 0, Moonlit.getInstance().getWidth(),
             // Moonlit.getInstance().getHeight());
             if (Moonlit.getInstance().getAntiAliasing()) {
-                Graphics2D g2 = (Graphics2D) g;
                 // 図形や線のアンチエイリアシングの有効化
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                _g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 // 文字描画のアンチエイリアシングの有効化
-                g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                _g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             }
-            this.updateClasses.forEach(c -> c.onUpdate(g));
+            this.updateClasses.forEach(c -> c.onUpdate(_g2d));
+            g.drawImage(_img, 0, 0, null);
             final double _ticks = Moonlit.getInstance().ticks;
             final MoonlitPanel _panel = this;
             if (Moonlit.getInstance().isFirst && !noLoop) {
@@ -411,4 +456,5 @@ public class Moonlit extends JFrame implements KeyListener {
     public void onMouseExited(Consumer<MouseEvent> f) {
         this.panel.mouseExitedArray.add(f);
     }
+
 }
