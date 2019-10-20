@@ -32,6 +32,7 @@ package com.mnt1fg.moonlit;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -62,6 +63,7 @@ public class Moonlit extends JFrame implements KeyListener {
     private boolean setupOk = false;
     public boolean isFirst = true;
     public boolean noLoop = false;
+    public boolean unDecorated = false;
     private int offsetWidth = 0, offsetHeight = 0;
 
     BufferedImage _img;
@@ -71,6 +73,7 @@ public class Moonlit extends JFrame implements KeyListener {
     private int playSpeed = 1;
 
     private boolean antiAliasing = true;
+    private static final int insetTop = 22;
 
     public static Moonlit getInstance() {
 
@@ -91,11 +94,13 @@ public class Moonlit extends JFrame implements KeyListener {
     }
 
     public void createWindow(int width, int height) {
-        this.setSize(width, height);
+        height += insetTop;
+        // this.setPreferredSize(new Dimension(width, height));
         this.width = width;
         this.height = height;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.panel = new MoonlitPanel();
+        this.panel.setPreferredSize(new Dimension(width, height - insetTop));
         this.add(this.panel);
         _img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         _g2d = (Graphics2D) _img.getGraphics();
@@ -108,10 +113,12 @@ public class Moonlit extends JFrame implements KeyListener {
 
     public void showWindow() {
         addKeyListener(this);
+        setUndecorated(unDecorated);
         if (!setupOk) {
             Moonlit.log("you must call createWindow method first.");
             System.exit(0);
         }
+        pack();
         this.setVisible(true);
     }
 
@@ -258,11 +265,6 @@ public class Moonlit extends JFrame implements KeyListener {
     }
 
     public static double map(double x, double originalMin, double originalMax, double destMin, double destMax) {
-        if (originalMax <= originalMin || destMax <= destMin) {
-            Moonlit.log("min must be smaller than max");
-            return x;
-        }
-
         x -= originalMin;
         originalMax -= originalMin;
         double ratio = x / originalMax;
